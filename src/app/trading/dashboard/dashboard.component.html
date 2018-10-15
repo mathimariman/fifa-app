@@ -1,0 +1,48 @@
+<div class="container">
+  <input id="typeahead-basic" #searchInput type="text" class="form-control" [inputFormatter]="myFormatter"
+    [resultFormatter]="myFormatter" [ngbTypeahead]="search" (selectItem)="itemSelected($event, searchInput)"
+    [resultTemplate]="rt" />
+
+  <ng-container *ngIf="playerPool$|async as playerPool">
+    <h3>PlayerPool:</h3>
+    <div class="row">
+      <div class="col-sm-3 mt-2" *ngFor="let player of playerPool | poolfilter:pools.WAITING">
+        <app-player-card [player]="player">
+          <div class="button-row">
+            <button type="button" class="btn btn-success btn-sm m-1" (click)="moveToPool(player, pools.BUYING)">Buy</button>
+            <button type="button" class="btn btn-warning btn-sm m-1" (click)="moveToPool(player, pools.SELLING)">Sell</button>
+            <button type="button" class="btn btn-danger btn-sm m-1" (click)="removeFromPlayerPool(player)">X</button>
+          </div>
+        </app-player-card>
+      </div>
+    </div>
+
+    <h3>BuyingPool:</h3>
+    <div class="row">
+      <div class="col-sm-3 mt-2" *ngFor="let player of playerPool | poolfilter:pools.BUYING">
+        <app-player-card [player]="player">
+          <div class="button-row">
+            <button type="button" class="btn btn-danger btn-sm m-1" (click)="moveToPool(player, pools.WAITING)">X</button>
+          </div>
+        </app-player-card>
+      </div>
+    </div>
+
+    <h3>SellingPool:</h3>
+    <div class="row">
+      <div class="col-sm-3 mt-2" *ngFor="let player of playerPool | poolfilter:pools.SELLING">
+        <app-player-card [player]="player">
+          <div class="button-row">
+            <button type="button" class="btn btn-danger btn-sm m-1" (click)="moveToPool(player, pools.WAITING)">X</button>
+          </div>
+        </app-player-card>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+
+<ng-template #rt let-r="result" let-t="term">
+  <ngb-highlight [result]="r.fullName" [term]="t"></ngb-highlight>
+  <span class="float-right ml-5">{{r.version}} {{r.rating}}</span>
+</ng-template>
