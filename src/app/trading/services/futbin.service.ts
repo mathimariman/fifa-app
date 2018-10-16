@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Player } from '../models/player';
 import { map } from 'rxjs/operators';
 import { FutbinPlayer } from '../models/futbin-player';
-import { EaPrices, PriceDetails } from '../models/ea-prices';
+import { FutbinPrices, PriceDetails } from '../models/futbin-prices';
 
 @Injectable()
 export class FutbinService {
@@ -21,13 +21,14 @@ export class FutbinService {
             position: p.position,
             id: p.id,
             version: p.version,
-            image: p.image
+            image: p.image,
+            price: null
           }))
       )
     );
 
   getPlayerPrice = (id: string): Observable<PriceDetails> =>
     this.http
-      .get<EaPrices>(`/fut/19/playerPrices?player=${id}`)
+      .get<FutbinPrices>(`/fut/19/playerPrices?player=${id}`)
       .pipe(map(prices => prices[id].prices.ps));
 }

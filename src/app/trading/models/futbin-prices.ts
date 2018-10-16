@@ -16,6 +16,6 @@ export interface Prices {
   pc: PriceDetails;
 }
 
-export interface EaPrices {
+export interface FutbinPrices {
   [key: string]: { prices: Prices };
 }

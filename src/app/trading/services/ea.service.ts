@@ -20,7 +20,8 @@ export class EaService {
             position: item.position,
             id: item.id,
             version: `${item.rarityId}`,
-            image: item.headshot.imgUrl
+            image: item.headshot.imgUrl,
+            price: null
           }))
         )
       );

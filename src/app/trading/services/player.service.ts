@@ -15,8 +15,10 @@ export class PlayerService {
 
   getPlayerPool = () => this.playerPool.asObservable();
 
-  addToPlayerPool = (player: Player) =>
+  addToPlayerPool = (player: Player) => {
+    this.getPrice(player);
     this.playerPool.next(this.playerPool.getValue().concat({ ...player, pool: Pools.WAITING }));
+  };
 
   removeFromPlayerPool = (player: Player) =>
     this.playerPool.next(this.playerPool.getValue().filter(p => p.id !== player.id));
@@ -27,4 +29,6 @@ export class PlayerService {
     );
 
   searchPlayers = (term: string) => this.eaService.searchPlayers(term);
+
+  getPrice = (player: Player) => this.futbinService.getPlayerPrice(player.id).subscribe(price => player.price = Number(price));
 }
