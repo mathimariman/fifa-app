@@ -1,18 +1,18 @@
 {
-  "/fut/search": {
+  "/fut": {
     "target": "https://www.futbin.com",
     "secure": true,
     "changeOrigin": true,
     "pathRewrite": {
-      "^/fut/search": "/search"
+      "^/fut": ""
     }
   },
-  "/ea/item": {
+  "/ea": {
     "target": "https://www.easports.com/fifa/ultimate-team/api/fut",
     "secure": true,
     "changeOrigin": true,
     "pathRewrite": {
-      "^/ea/item": "/item"
+      "^/ea": ""
     }
   }
 }
