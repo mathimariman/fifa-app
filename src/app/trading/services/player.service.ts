@@ -30,5 +30,5 @@ export class PlayerService {
 
   searchPlayers = (term: string) => this.eaService.searchPlayers(term);
 
-  getPrice = (player: Player) => this.futbinService.getPlayerPrice(player.id).subscribe(price => {player.price = Number(price.LCPrice)});
+  getPrice = (player: Player) => this.futbinService.getPlayerPrice(player.id).subscribe(price => player.price = Number(price.LCPrice));
 }
