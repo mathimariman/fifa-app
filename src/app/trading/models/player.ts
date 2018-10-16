@@ -1,4 +1,4 @@
-import { Pools } from './pools.enum';
+import { Pools } from '../pools.enum';
 
 export class Player {
   fullName: string;
@@ -7,5 +7,5 @@ export class Player {
   id: string;
   version: string;
   image: string;
-  pool: Pools;
+  pool?: Pools;
 }

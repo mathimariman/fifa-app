@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { NgbTypeaheadSelectItemEvent, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
-import { debounceTime, filter, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 
-import { PlayerService } from '../player.service';
-import { Player } from '../player';
+import { PlayerService } from '../services/player.service';
+import { Player } from '../models/player';
 import { Pools } from '../pools.enum';
 
 @Component({
@@ -16,6 +16,9 @@ export class DashboardComponent implements OnInit {
   playerPool$: Observable<Player[]>;
   pools = Pools;
 
+  @ViewChild('searchInput')
+  searchInput: NgbTypeahead;
+
   constructor(private playerService: PlayerService) {}
 
   ngOnInit() {
@@ -24,9 +27,14 @@ export class DashboardComponent implements OnInit {
 
   search = (text$: Observable<string>) =>
     text$.pipe(
+      tap(term => {
+        if (term.length === 0 && this.searchInput.isPopupOpen()) {
+          this.searchInput.dismissPopup();
+        }
+      }),
       debounceTime(200),
-      filter(t => t.length > 3),
-      switchMap(t => this.playerService.getPlayer(t))
+      filter(term => term.length >= 3),
+      switchMap(term => this.playerService.searchPlayers(term))
     );
 
   itemSelected = (event: NgbTypeaheadSelectItemEvent, searchInput) => {
@@ -35,16 +43,8 @@ export class DashboardComponent implements OnInit {
     searchInput.value = '';
   };
 
-  moveToPool = (player: Player, pool: Pools) =>
-    this.playerService.moveToPlayerPool(player, pool);
-
-  addToBuyingPool = player =>
-    this.playerService.moveToPlayerPool(player, Pools.BUYING);
-  addToSellingPool = player =>
-    this.playerService.moveToPlayerPool(player, Pools.SELLING);
-
-  removeFromPlayerPool = (player: Player) =>
-    this.playerService.removeFromPlayerPool(player);
+  moveToPool = (player: Player, pool: Pools) => this.playerService.moveToPlayerPool(player, pool);
+  removeFromPlayerPool = (player: Player) => this.playerService.removeFromPlayerPool(player);
 
   myFormatter = player => player && player.fullName;
 }

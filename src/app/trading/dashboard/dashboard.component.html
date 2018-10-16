@@ -1,5 +1,5 @@
 <div class="container">
-  <input id="typeahead-basic" #searchInput type="text" class="form-control" [inputFormatter]="myFormatter"
+  <input id="typeahead-basic" #searchInput="ngbTypeahead" type="text" class="form-control" [inputFormatter]="myFormatter"
     [resultFormatter]="myFormatter" [ngbTypeahead]="search" (selectItem)="itemSelected($event, searchInput)"
     [resultTemplate]="rt" />
 
