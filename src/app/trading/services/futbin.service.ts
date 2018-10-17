@@ -11,7 +11,7 @@ export class FutbinService {
   constructor(private http: HttpClient) {}
 
   searchPlayers = (term: string): Observable<Player[]> =>
-    this.http.get<FutbinPlayer[]>(`/fut/search?year=19&term=${term}`).pipe(
+    this.http.get<FutbinPlayer[]>(`/futbin/search?year=19&term=${term}`).pipe(
       map(
         players =>
           Array.isArray(players) &&
@@ -29,6 +29,6 @@ export class FutbinService {
 
   getPlayerPrice = (id: string): Observable<{ id: string; prices: PriceDetails }> =>
     this.http
-      .get<FutbinPrices>(`/fut/19/playerPrices?player=${id}`)
+      .get<FutbinPrices>(`/futbin/19/playerPrices?player=${id}`)
       .pipe(map(prices => ({ id, prices: prices[id].prices.ps })));
 }

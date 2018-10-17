@@ -1,10 +1,10 @@
 {
-  "/fut": {
+  "/futbin": {
     "target": "https://www.futbin.com",
     "secure": true,
     "changeOrigin": true,
     "pathRewrite": {
-      "^/fut": ""
+      "^/futbin": ""
     }
   },
   "/ea": {
