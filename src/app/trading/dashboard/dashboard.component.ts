@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { NgbTypeaheadSelectItemEvent, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
@@ -18,6 +18,9 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('searchInput')
   searchInput: NgbTypeahead;
+
+  @ViewChild('typeahead')
+  typeAheadNode: ElementRef;
 
   constructor(private playerService: PlayerService) {}
 
@@ -40,7 +43,7 @@ export class DashboardComponent implements OnInit {
   itemSelected = (event: NgbTypeaheadSelectItemEvent, searchInput) => {
     event.preventDefault();
     this.playerService.addToPlayerPool(event.item);
-    searchInput.value = '';
+    this.typeAheadNode.nativeElement.value = '';
   };
 
   moveToPool = (player: Player, pool: Pools) => this.playerService.moveToPlayerPool(player, pool);
