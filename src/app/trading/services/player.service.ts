@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject, timer, merge, interval, defer, forkJoin } from 'rxjs';
+import { switchMapTo, tap } from 'rxjs/operators';
 import { Player } from '../models/player';
 import { Pools } from '../pools.enum';
 import { FutbinService } from './futbin.service';
@@ -11,12 +12,31 @@ import { EaService } from './ea.service';
 export class PlayerService {
   playerPool = new BehaviorSubject<Player[]>([]);
 
-  constructor(private futbinService: FutbinService, private eaService: EaService) {}
+  constructor(private futbinService: FutbinService, private eaService: EaService) {
+    interval(1000)
+      .pipe(switchMapTo(this.getPricesForPlayers()))
+      .subscribe(priceItems => {
+        const updatedPlayerPool = this.playerPool
+          .getValue()
+          .concat(priceItems)
+          .reduce(
+            (merged, item) => merged.set(item.id, Object.assign(merged.get(item.id) || {}, item)),
+            new Map()
+          );
+        this.playerPool.next(Array.from(updatedPlayerPool.values()));
+      });
+  }
+
+  getPricesForPlayers = () =>
+    defer(() =>
+      forkJoin(
+        ...this.playerPool.getValue().map(player => this.futbinService.getPlayerPrice(player.id))
+      )
+    );
 
   getPlayerPool = () => this.playerPool.asObservable();
 
   addToPlayerPool = (player: Player) => {
-    this.getPrice(player.id);
     this.playerPool.next(this.playerPool.getValue().concat({ ...player, pool: Pools.WAITING }));
   };
 
@@ -30,5 +50,6 @@ export class PlayerService {
 
   searchPlayers = (term: string) => this.eaService.searchPlayers(term);
 
-  getPrice = (id: string) => this.futbinService.getPlayerPrice(id).subscribe(price => console.log(price));
+  getPrice = (id: string) =>
+    this.futbinService.getPlayerPrice(id).subscribe(price => console.log(price));
 }

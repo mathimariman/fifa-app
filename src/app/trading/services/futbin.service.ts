@@ -22,13 +22,13 @@ export class FutbinService {
             id: p.id,
             version: p.version,
             image: p.image,
-            price: null
+            prices: null
           }))
       )
     );
 
-  getPlayerPrice = (id: string): Observable<PriceDetails> =>
+  getPlayerPrice = (id: string): Observable<{ id: string; prices: PriceDetails }> =>
     this.http
       .get<FutbinPrices>(`/fut/19/playerPrices?player=${id}`)
-      .pipe(map(prices => prices[id].prices.ps));
+      .pipe(map(prices => ({ id, prices: prices[id].prices.ps })));
 }

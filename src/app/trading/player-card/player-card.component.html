@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">{{player.fullName}}</h5>
-    <p>{{player.price}}</p>
+    <p>{{player.prices | json}}</p>
     <ng-content select=".button-row"></ng-content>
   </div>
 </div>
