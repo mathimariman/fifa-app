@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, defer, forkJoin, interval } from 'rxjs';
+import { BehaviorSubject, defer, forkJoin, timer } from 'rxjs';
 import { switchMapTo } from 'rxjs/operators';
 import { Player } from '../models/player';
 import { Pools } from '../pools.enum';
@@ -13,7 +13,7 @@ export class PlayerService {
   playerPool = new BehaviorSubject<Player[]>([]);
 
   constructor(private futbinService: FutbinService, private eaService: EaService) {
-    interval(30000)
+    timer(5000)
       .pipe(switchMapTo(this.getPricesForPlayers()))
       .subscribe(priceItems => {
         const updatedPlayerPool = this.playerPool
@@ -49,7 +49,4 @@ export class PlayerService {
     );
 
   searchPlayers = (term: string) => this.eaService.searchPlayers(term);
-
-  getPrice = (id: string) =>
-    this.futbinService.getPlayerPrice(id).subscribe(price => console.log(price));
 }

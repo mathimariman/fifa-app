@@ -1,7 +1,15 @@
 <div class="container">
-  <input id="typeahead-basic" #typeahead #searchInput="ngbTypeahead" type="text" class="form-control" [inputFormatter]="myFormatter"
-    [resultFormatter]="myFormatter" [ngbTypeahead]="search" (selectItem)="itemSelected($event, searchInput)"
-    [resultTemplate]="rt" />
+  <div class="row">
+    <div class="col-md-8">
+      <input id="typeahead-basic" #typeahead #searchInput="ngbTypeahead" type="text" class="form-control"
+             [inputFormatter]="myFormatter"
+             [resultFormatter]="myFormatter" [ngbTypeahead]="search" (selectItem)="itemSelected($event, searchInput)"
+             [resultTemplate]="rt"/>
+    </div>
+    <div class="col-md-4">
+      <app-bank></app-bank>
+    </div>
+  </div>
 
   <ng-container *ngIf="playerPool$|async as playerPool">
     <h3>PlayerPool:</h3>
@@ -9,8 +17,10 @@
       <div class="col-sm-3 mt-2" *ngFor="let player of playerPool | poolfilter:pools.WAITING">
         <app-player-card [player]="player">
           <div class="button-row">
-            <button type="button" class="btn btn-success btn-sm m-1" (click)="moveToPool(player, pools.BUYING)">Buy</button>
-            <button type="button" class="btn btn-warning btn-sm m-1" (click)="moveToPool(player, pools.SELLING)">Sell</button>
+            <button type="button" class="btn btn-success btn-sm m-1" (click)="moveToPool(player, pools.BUYING)">Buy
+            </button>
+            <button type="button" class="btn btn-warning btn-sm m-1" (click)="moveToPool(player, pools.SELLING)">Sell
+            </button>
             <button type="button" class="btn btn-danger btn-sm m-1" (click)="removeFromPlayerPool(player)">X</button>
           </div>
         </app-player-card>
@@ -22,7 +32,8 @@
       <div class="col-sm-3 mt-2" *ngFor="let player of playerPool | poolfilter:pools.BUYING">
         <app-player-card [player]="player">
           <div class="button-row">
-            <button type="button" class="btn btn-danger btn-sm m-1" (click)="moveToPool(player, pools.WAITING)">X</button>
+            <button type="button" class="btn btn-danger btn-sm m-1" (click)="moveToPool(player, pools.WAITING)">X
+            </button>
           </div>
         </app-player-card>
       </div>
@@ -33,7 +44,8 @@
       <div class="col-sm-3 mt-2" *ngFor="let player of playerPool | poolfilter:pools.SELLING">
         <app-player-card [player]="player">
           <div class="button-row">
-            <button type="button" class="btn btn-danger btn-sm m-1" (click)="moveToPool(player, pools.WAITING)">X</button>
+            <button type="button" class="btn btn-danger btn-sm m-1" (click)="moveToPool(player, pools.WAITING)">X
+            </button>
           </div>
         </app-player-card>
       </div>

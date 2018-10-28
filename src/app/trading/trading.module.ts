@@ -9,11 +9,13 @@ import { PoolfilterPipe } from './poolfilter.pipe';
 import { PlayerCardComponent } from './player-card/player-card.component';
 import { FutbinService } from './services/futbin.service';
 import { EaService } from './services/ea.service';
+import { BankComponent } from './bank/bank.component';
+import { BankService } from './services/bank.service';
 
 @NgModule({
   imports: [CommonModule, FormsModule, HttpClientModule, NgbTypeaheadModule],
-  declarations: [DashboardComponent, PoolfilterPipe, PlayerCardComponent],
-  providers: [PlayerService, FutbinService, EaService],
+  declarations: [DashboardComponent, PoolfilterPipe, PlayerCardComponent, BankComponent],
+  providers: [PlayerService, FutbinService, EaService, BankService],
   exports: [DashboardComponent]
 })
 export class TradingModule {}

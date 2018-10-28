@@ -15,13 +15,13 @@ export class EaService {
       .pipe(
         map(response =>
           response.items.map(item => ({
-            fullName: `${item.firstName} ${item.lastName}`,
+            fullName: item.commonName ? item.commonName : `${item.firstName} ${item.lastName}`,
             rating: `${item.rating}`,
             position: item.position,
             id: item.id,
             version: `${item.rarityId}`,
             image: item.headshot.imgUrl,
-            prices: null
+            price: null
           }))
         )
       );
