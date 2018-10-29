@@ -7,27 +7,8 @@ import { BankService } from '../services/bank.service';
   styleUrls: ['./bank.component.css']
 })
 export class BankComponent implements OnInit {
+  constructor(public bankService: BankService) {}
 
-  constructor(public bankService: BankService) {
-  }
-
-  ngOnInit() {
-  }
-
-  addBuying(): void {
-    this.bankService.addBuying(1000);
-  }
-
-  removeBuying(): void {
-    this.bankService.removeBuying(1000);
-  }
-
-  addSelling(): void {
-    this.bankService.addSelling(1000);
-  }
-
-  removeSelling(): void {
-    this.bankService.removeSelling(1000);
-  }
-
+  // TODO3: Get BankSaldo from bankService and subscribe with async pipe in template
+  ngOnInit() {}
 }
