@@ -1,6 +1,1 @@
-<input [(ngModel)]="bankService.bank" type="number" class="form-control" placeholder="Bank">
-<div>{{bankService.calculationResult}}</div>
-<button (click)="addBuying()">add B</button>
-<button (click)="removeBuying()">remove B</button>
-<button (click)="addSelling()">add S</button>
-<button (click)="removeSelling()">remove S</button>
+<div>{{saldo | async | number}}</div>

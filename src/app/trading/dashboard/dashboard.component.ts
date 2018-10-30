@@ -40,6 +40,8 @@ export class DashboardComponent implements OnInit {
       switchMap(term => this.playerService.searchPlayers(term))
     );
 
+  updatePlayerPrices = () => this.playerService.updatePricesPlayerPool();
+
   itemSelected = (event: NgbTypeaheadSelectItemEvent, searchInput) => {
     event.preventDefault();
     this.playerService.addToPlayerPool(event.item);

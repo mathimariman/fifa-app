@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, defer, forkJoin, timer } from 'rxjs';
-import { switchMapTo } from 'rxjs/operators';
+import { BehaviorSubject, defer, forkJoin, timer, Subject } from 'rxjs';
+import { switchMapTo, tap } from 'rxjs/operators';
 import { Player } from '../models/player';
 import { Pools } from '../pools.enum';
 import { FutbinService } from './futbin.service';
@@ -11,10 +11,14 @@ import { EaService } from './ea.service';
 })
 export class PlayerService {
   playerPool = new BehaviorSubject<Player[]>([]);
+  priceTrigger = new Subject();
 
   constructor(private futbinService: FutbinService, private eaService: EaService) {
-    timer(5000)
-      .pipe(switchMapTo(this.getPricesForPlayers()))
+    this.priceTrigger
+      .pipe(
+        tap(console.log),
+        switchMapTo(this.getPricesForPlayers())
+      )
       .subscribe(priceItems => {
         const updatedPlayerPool = this.playerPool
           .getValue()
@@ -38,6 +42,11 @@ export class PlayerService {
 
   addToPlayerPool = (player: Player) => {
     this.playerPool.next(this.playerPool.getValue().concat({ ...player, pool: Pools.WAITING }));
+    this.updatePricesPlayerPool();
+  };
+
+  updatePricesPlayerPool = () => {
+    this.priceTrigger.next();
   };
 
   removeFromPlayerPool = (player: Player) =>
