@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable, Subject } from 'rxjs';
 import { PlayerService } from './player.service';
 import { map } from 'rxjs/operators';
 import { Player } from '../models/player';
@@ -9,13 +9,17 @@ import { Pools } from '../pools.enum';
   providedIn: 'root'
 })
 export class BankService {
-  constructor(private playerService: PlayerService) {}
+  bankUpdateSubject = new Subject<number>();
 
-  getBankSaldo(): Observable<number> {
-    return this.playerService.getPlayerPool().pipe(map(pool => this.calculateSaldo(pool)));
+  constructor(private playerService: PlayerService) {
   }
 
-  calculateSaldo(pool: Player[]) {
+  getBankSaldo(): Observable<number> {
+    return combineLatest(this.playerService.getPlayerPool(), this.bankUpdateSubject.asObservable())
+      .pipe(map(([pool, bank]) => this.calculateSaldo(pool, bank)));
+  }
+
+  calculateSaldo(pool: Player[], bank: number) {
     return pool.reduce((acc, val) => {
       switch (val.pool) {
         case Pools.BUYING:
@@ -25,6 +29,10 @@ export class BankService {
         default:
           return acc;
       }
-    }, 0);
+    }, bank);
+  }
+
+  updateBank(bankSaldo: number) {
+    this.bankUpdateSubject.next(bankSaldo);
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BankService } from '../services/bank.service';
 import { Observable } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-bank',
@@ -9,10 +10,13 @@ import { Observable } from 'rxjs';
 })
 export class BankComponent implements OnInit {
   saldo: Observable<number>;
-  constructor(private bankService: BankService) {}
+  bank = new FormControl();
 
-  // TODO3: Get BankSaldo from bankService and subscribe with async pipe in template
+  constructor(private bankService: BankService) {
+  }
+
   ngOnInit() {
     this.saldo = this.bankService.getBankSaldo();
+    this.bank.valueChanges.subscribe(value => this.bankService.updateBank(value));
   }
 }
