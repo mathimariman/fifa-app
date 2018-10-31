@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { PlayerService } from './player.service';
 import { map } from 'rxjs/operators';
 import { Player } from '../models/player';
@@ -9,7 +9,7 @@ import { Pools } from '../pools.enum';
   providedIn: 'root'
 })
 export class BankService {
-  bankUpdateSubject = new Subject<number>();
+  bankUpdateSubject = new BehaviorSubject<number>(0);
 
   constructor(private playerService: PlayerService) {
   }
