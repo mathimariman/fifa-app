@@ -11,6 +11,6 @@ export class FutbinService {
 
   getPlayerPrice = (id: string): Observable<{ id: string; price: number }> =>
     this.http
-      .get<FutbinPrices>(`/futbin/19/playerPrices?player=${id}`)
-      .pipe(map(prices => ({ id, price: +prices[id].prices.ps.LCPrice.replace(/,/g, '') })));
+      .get<FutbinPrices>(`http://ec2-18-197-208-57.eu-central-1.compute.amazonaws.com:3000/api/prices?playerIds=${id}`)
+      .pipe(map(prices => ({ id, price: +prices[id] })));
 }
