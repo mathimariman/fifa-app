@@ -1,12 +1,11 @@
 import { Pools } from '../pools.enum';
 
 export class Player {
-  fullName: string;
+  name: string;
   rating: string;
   position: string;
   id: string;
-  version: string;
   image: string;
   pool?: Pools;
-  price: number;
+  price?: number;
 }

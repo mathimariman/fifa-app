@@ -18,4 +18,5 @@ import { BankService } from './services/bank.service';
   providers: [PlayerService, FutbinService, EaService, BankService],
   exports: [DashboardComponent]
 })
-export class TradingModule {}
+export class TradingModule {
+}

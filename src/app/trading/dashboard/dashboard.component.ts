@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { NgbTypeaheadSelectItemEvent, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgbTypeahead, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 
@@ -51,5 +51,5 @@ export class DashboardComponent implements OnInit {
   moveToPool = (player: Player, pool: Pools) => this.playerService.moveToPlayerPool(player, pool);
   removeFromPlayerPool = (player: Player) => this.playerService.removeFromPlayerPool(player);
 
-  myFormatter = player => player && player.fullName;
+  myFormatter = player => player && player.name;
 }
