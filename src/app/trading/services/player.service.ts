@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, defer, forkJoin, timer, Subject } from 'rxjs';
+import { BehaviorSubject, defer, forkJoin, Subject } from 'rxjs';
 import { switchMapTo, tap } from 'rxjs/operators';
 import { Player } from '../models/player';
 import { Pools } from '../pools.enum';
-import { FutbinService } from './futbin.service';
-import { EaService } from './ea.service';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,7 @@ export class PlayerService {
   playerPool = new BehaviorSubject<Player[]>([]);
   priceTrigger = new Subject();
 
-  constructor(private futbinService: FutbinService, private eaService: EaService) {
+  constructor(private dataService: DataService) {
     this.priceTrigger
       .pipe(
         tap(console.log),
@@ -34,7 +33,7 @@ export class PlayerService {
   getPricesForPlayers = () =>
     defer(() =>
       forkJoin(
-        ...this.playerPool.getValue().map(player => this.futbinService.getPlayerPrice(player.id))
+        ...this.playerPool.getValue().map(player => this.dataService.getPlayerPrice(player.id))
       )
     );
 
@@ -57,5 +56,5 @@ export class PlayerService {
       this.playerPool.getValue().map(p => (p.id === player.id ? { ...p, pool } : p))
     );
 
-  searchPlayers = (term: string) => this.eaService.searchPlayers(term);
+  searchPlayers = (term: string) => this.dataService.getPlayers(term);
 }

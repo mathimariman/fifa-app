@@ -7,7 +7,7 @@ export class BasicInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log('setting headers');
     const authReq = req.clone({
-      headers: req.headers.set('Authorization', 'Basic *TOP SECRET*')
+      headers: req.headers.set('Authorization', 'Basic ZmlmYS11c2VyOlhqRWhlQmVyaDI=')
     });
     return next.handle(authReq);
   }
