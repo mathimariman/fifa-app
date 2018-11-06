@@ -19,6 +19,6 @@ export class DataService {
 
   getPlayerPrice = (id: string): Observable<{ id: string; price: number }> =>
     this.http
-      .get<FutbinPrices>(`https://4zgwv0ez11.execute-api.eu-central-1.amazonaws.com/dev/price/search/playerId=${id}`)
+      .get<FutbinPrices>(`https://4zgwv0ez11.execute-api.eu-central-1.amazonaws.com/dev/price/search?playerId=${id}`)
       .pipe(map(prices => ({ id, price: +prices[id] })));
 }
