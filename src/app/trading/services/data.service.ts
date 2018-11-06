@@ -14,11 +14,11 @@ export class DataService {
 
   getPlayers(term: string): Observable<Player[]> {
     return this.http
-      .get<Player[]>('http://ec2-18-197-208-57.eu-central-1.compute.amazonaws.com:3000/api/players/search?playerName=' + term);
+      .get<Player[]>(`https://4zgwv0ez11.execute-api.eu-central-1.amazonaws.com/dev/player/search?playerName=${term}`)
   }
 
   getPlayerPrice = (id: string): Observable<{ id: string; price: number }> =>
     this.http
-      .get<FutbinPrices>(`http://ec2-18-197-208-57.eu-central-1.compute.amazonaws.com:3000/api/prices?playerIds=${id}`)
+      .get<FutbinPrices>(`https://4zgwv0ez11.execute-api.eu-central-1.amazonaws.com/dev/price/search/playerId=${id}`)
       .pipe(map(prices => ({ id, price: +prices[id] })));
 }
