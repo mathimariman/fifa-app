@@ -8,4 +8,5 @@ export class Player {
   image: string;
   pool?: Pools;
   price?: number;
+  version: string;
 }
