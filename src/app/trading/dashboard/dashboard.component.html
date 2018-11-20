@@ -4,8 +4,9 @@
       <form class="form-inline">
         <div class="form-group col-md-8">
           <input id="typeahead-basic" #typeahead #searchInput="ngbTypeahead" type="text" class="form-control"
-            [inputFormatter]="myFormatter" [resultFormatter]="myFormatter" [ngbTypeahead]="search" (selectItem)="itemSelected($event, searchInput)"
-            [resultTemplate]="rt" />
+                 [inputFormatter]="myFormatter" [resultFormatter]="myFormatter" [ngbTypeahead]="search"
+                 (selectItem)="itemSelected($event, searchInput)"
+                 [resultTemplate]="rt"/>
         </div>
       </form>
     </div>
@@ -15,18 +16,20 @@
   </div>
 
   <ng-container *ngIf="playerPool$|async as playerPool">
-    <h3>PlayerPool:</h3>
-    <div class="row">
-      <div class="col-sm-3 mt-2" *ngFor="let player of playerPool | poolfilter:pools.WAITING">
-        <app-player-card [player]="player">
-          <div class="button-row">
-            <button type="button" class="btn btn-success btn-sm m-1" (click)="moveToPool(player, pools.BUYING)">Buy
-            </button>
-            <button type="button" class="btn btn-warning btn-sm m-1" (click)="moveToPool(player, pools.SELLING)">Sell
-            </button>
-            <button type="button" class="btn btn-danger btn-sm m-1" (click)="removeFromPlayerPool(player)">X</button>
-          </div>
-        </app-player-card>
+    <div class="margin-small">
+      <h3>PlayerPool:</h3>
+      <div class="row">
+        <div class="col-sm-3 mt-2" *ngFor="let player of playerPool | poolfilter:pools.WAITING">
+          <app-player-card [player]="player">
+            <div class="button-row">
+              <button type="button" class="btn btn-success btn-sm m-1" (click)="moveToPool(player, pools.BUYING)">Buy
+              </button>
+              <button type="button" class="btn btn-warning btn-sm m-1" (click)="moveToPool(player, pools.SELLING)">Sell
+              </button>
+              <button type="button" class="btn btn-danger btn-sm m-1" (click)="removeFromPlayerPool(player)">X</button>
+            </div>
+          </app-player-card>
+        </div>
       </div>
     </div>
 

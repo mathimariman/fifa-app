@@ -20,6 +20,7 @@ export class BankService {
   }
 
   calculateSaldo(pool: Player[], bank: number) {
+    bank = bank ? bank : 0;
     return pool.reduce((acc, val) => {
       switch (val.pool) {
         case Pools.BUYING:

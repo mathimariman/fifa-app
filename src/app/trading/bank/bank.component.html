@@ -1,2 +1,10 @@
-<div>{{saldo | async | number}}</div>
-<input type="number" class="form-control" [formControl]="bank"/>
+<div class="row">
+  <div class="col-md-6">
+    <input type="number" class="form-control" [formControl]="bank"/>
+  </div>
+  <div class="col-md-6">
+    <div class="bank-saldo"
+         [ngStyle]="{'color': (saldo | async) >= 0 ? 'green' : 'red' }">{{saldo | async | number}}</div>
+  </div>
+</div>
+
