@@ -2,4 +2,8 @@
   display: inline;
 }
 
-
+.player-image {
+  width: 65px;
+  position: relative;
+  top: -2px;
+}

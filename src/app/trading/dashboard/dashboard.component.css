@@ -1,3 +1,9 @@
 .rating {
   text-align: end;
 }
+
+.player-image {
+  width: 38px;
+  position: relative;
+  top: -2px;
+}

@@ -7,9 +7,6 @@
             [inputFormatter]="myFormatter" [resultFormatter]="myFormatter" [ngbTypeahead]="search" (selectItem)="itemSelected($event, searchInput)"
             [resultTemplate]="rt" />
         </div>
-        <div class="form-group col-md-4">
-          <button (click)="updatePlayerPrices()" class="btn btn-primary">Update prices</button>
-        </div>
       </form>
     </div>
     <div class="col-md-4">
@@ -62,5 +59,6 @@
 
 <ng-template #rt let-r="result" let-t="term">
   <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+  <img class="float-left player-image" src="{{r.image}}"/>
   <span class="float-right ml-5">{{r.version}} - {{r.rating}}</span>
 </ng-template>
